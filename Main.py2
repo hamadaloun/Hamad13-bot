@@ -1,0 +1,19 @@
+import os
+import time
+from engine import Engine
+from notifier import TelegramNotifier
+
+TOKEN = os.getenv("TELEGRAM_TOKEN")
+CHAT_ID = os.getenv("CHAT_ID")
+
+notifier = TelegramNotifier(TOKEN, CHAT_ID)
+engine = Engine(notifier)
+
+print("Bot is running...")
+
+while True:
+    try:
+        engine.scan_watchlist("watchlist.txt")
+    except Exception as e:
+        print("Error:", e)
+    time.sleep(30)
